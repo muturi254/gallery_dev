@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs("node 23")
+    }
+
+    stages {
+        
+        stage ('clone repository') {
+            steps {
+                echo "cloning repository"
+                git 'https://github.com/muturi254/gallery_dev.git'
+                echo "done..."
+            }
+        }
+
+        stage ('Build project') {
+            steps {
+                sh "npm install"
+            }
+        }
+    }
+}
