@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        
+
         stage ('clone repository') {
             steps {
                 echo "cloning repository"
@@ -19,6 +19,24 @@ pipeline {
             steps {
                 sh "npm install"
             }
+        }
+
+        stage ('Test project') {
+            steps {
+                echo "begin testing"
+                sh "npm test"
+            }
+        }
+
+
+    }
+    post {
+        success {
+            slackSend color: "good", message: "Build ${currentBuild.number}  successfull"
+        }
+
+        failure {
+            slackSend color: "red", message: "Build ${currentBuild.number}  Failed"
         }
     }
 }
